@@ -11,6 +11,7 @@ require (
 	github.com/openshift/library-go v0.0.0-20211220195323-eca2c467c492
 	github.com/prometheus/client_golang v1.11.0
 	github.com/spf13/cobra v1.2.1
+	github.com/stretchr/testify v1.7.0
 	k8s.io/api v0.23.0
 	k8s.io/apimachinery v0.23.0
 	k8s.io/apiserver v0.23.0
@@ -19,6 +20,7 @@ require (
 	k8s.io/controller-manager v0.23.0
 	k8s.io/klog/v2 v2.30.0
 	k8s.io/kubernetes v1.23.0
+	k8s.io/pod-security-admission v0.0.0
 )
 
 require (
@@ -63,6 +65,7 @@ require (
 	github.com/opencontainers/runc v1.0.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/profile v1.3.0 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.28.0 // indirect
 	github.com/prometheus/procfs v0.6.0 // indirect
