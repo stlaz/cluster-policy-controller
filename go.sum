@@ -1239,6 +1239,7 @@ k8s.io/kubernetes v1.23.0/go.mod h1:sgD3+Qzb8FHlRKlZnNCN+np3zZuHEAb/0PKLJkYyCUI=
 k8s.io/legacy-cloud-providers v0.23.0/go.mod h1:tM5owPlhLyEYJC2FLHgcGu1jks5ANvH2JlY03mnUYU4=
 k8s.io/metrics v0.23.0/go.mod h1:NDiZTwppEtAuKJ1Rxt3S4dhyRzdp6yUcJf0vo023dPo=
 k8s.io/mount-utils v0.23.0/go.mod h1:9pFhzVjxle1osJUo++9MFDat9HPkQUOoHCn+eExZ3Ew=
+k8s.io/pod-security-admission v0.23.0 h1:xxCwpQ0sXoGnzplssHFseP7mD8P7TnK7qDuvlWEmPLw=
 k8s.io/pod-security-admission v0.23.0/go.mod h1:vGExA081PHZFK9Yma4kuPtfWwy5zxbEUhniiUDKFicM=
 k8s.io/sample-apiserver v0.23.0/go.mod h1:o0U/1hkfndbnLg1OfVHQiG08lmDkYJq7qljCuwjoTrI=
 k8s.io/system-validators v1.6.0/go.mod h1:bPldcLgkIUK22ALflnsXk8pvkTEndYdNuaHH6gRrl0Q=
