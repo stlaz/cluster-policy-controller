@@ -81,8 +81,6 @@ func NewPodSecurityAdmissionLabelSynchronizationController(
 		saToSCCsCache: NewSAToSCCCache(rbacInformers, sccInformer),
 	}
 
-	// FIXME: filter out NSes that don't have the SCC UIDs annotation set yet because that makes the conversion panic
-	// FIXME: also make the conversion not panic but error out instead
 	return factory.New().
 		WithSync(c.sync).
 		WithFilteredEventsInformers(
@@ -106,6 +104,8 @@ func NewPodSecurityAdmissionLabelSynchronizationController(
 				if !ok {
 					return false
 				}
+				// the SCC mapping requires the annotation
+				// FIXME: make the mapping not panic but error out instead
 				if ns.Annotations == nil || len(ns.Annotations[securityv1.UIDRangeAnnotation]) == 0 {
 					return false
 				}
@@ -115,7 +115,7 @@ func NewPodSecurityAdmissionLabelSynchronizationController(
 		).
 		WithInformers(
 			serviceAccountInformer.Informer(),
-			sccInformer.Informer(),
+			sccInformer.Informer(), // FIXME: we need to resync the cache on an SCC update (in case one is added or removed)
 		).
 		ToController(
 			controllerName,

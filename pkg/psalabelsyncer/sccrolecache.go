@@ -165,6 +165,8 @@ func NewSAToSCCCache(rbacInformers rbacv1informers.Interface, sccInfomer securit
 		// TODO: do I need these?
 		rolesSynced:        rbacInformers.Roles().Informer().HasSynced,
 		roleBindingsSynced: rbacInformers.RoleBindings().Informer().HasSynced,
+
+		usefulRoles: sets.NewString(),
 	}
 }
 
