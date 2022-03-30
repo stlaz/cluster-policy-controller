@@ -18,6 +18,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	psapi "k8s.io/pod-security-admission/api"
 
+	securityv1 "github.com/openshift/api/security/v1"
 	securityv1informers "github.com/openshift/client-go/security/informers/externalversions/security/v1"
 	securityv1listers "github.com/openshift/client-go/security/listers/security/v1"
 
@@ -84,12 +85,35 @@ func NewPodSecurityAdmissionLabelSynchronizationController(
 	// FIXME: also make the conversion not panic but error out instead
 	return factory.New().
 		WithSync(c.sync).
-		WithInformers(
-			namespaceInformer.Informer(),
-			rbacInformers.Roles().Informer(),
+		WithFilteredEventsInformers(
+			func(obj interface{}) bool {
+				return c.saToSCCsCache.IsRoleBindingRelevant(obj)
+			},
 			rbacInformers.RoleBindings().Informer(),
-			rbacInformers.ClusterRoles().Informer(),
 			rbacInformers.ClusterRoleBindings().Informer(),
+		).
+		WithFilteredEventsInformers(
+			func(obj interface{}) bool {
+				return c.saToSCCsCache.IsRoleInvolvesSCCs(obj, true)
+			},
+			rbacInformers.Roles().Informer(),
+			rbacInformers.ClusterRoles().Informer(),
+		).
+		WithFilteredEventsInformers(
+			func(obj interface{}) bool {
+				// TODO: also probably don't react on NSes that are being deleted
+				ns, ok := obj.(*corev1.Namespace)
+				if !ok {
+					return false
+				}
+				if ns.Annotations == nil || len(ns.Annotations[securityv1.UIDRangeAnnotation]) == 0 {
+					return false
+				}
+				return true
+			},
+			namespaceInformer.Informer(),
+		).
+		WithInformers(
 			serviceAccountInformer.Informer(),
 			sccInformer.Informer(),
 		).
